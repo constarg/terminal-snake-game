@@ -2,6 +2,7 @@
 #define TERMINAL_SNAKE_GAME_MEM_H 1
 
 #include <malloc.h>
+#include <stdlib.h>
 
 #define ALLOCATE_MEM(VAR, SIZE, SIZE_OF_TYPE) do {  \
         (VAR) = calloc( (SIZE), (SIZE_OF_TYPE ));   \
