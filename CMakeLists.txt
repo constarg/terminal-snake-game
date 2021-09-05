@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(
         "./entities/include"
-        "window/include"
+        "./window/include"
         "./memory/include"
         "./tools/include"
 )
