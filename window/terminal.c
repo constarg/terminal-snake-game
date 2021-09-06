@@ -1,5 +1,6 @@
 #include <terminal/terminal.h>
 #include <termios.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <memory.h>
 
@@ -51,7 +52,7 @@ int stop_non_blocking_mode() {
 }
 
 
-int get_pressed_kay() {
+int get_pressed_key() {
     char buffer[3];
     ssize_t len;
 
@@ -61,12 +62,13 @@ int get_pressed_kay() {
 
     if (len > 0) {
         int code_1 = (int) buffer[0], code_2 = (int) buffer[1], code_3 = (int) buffer[2];
+        memset(buffer, 0, sizeof(buffer));
         // check the codes.
         if (code_1 == 0x1b && code_2 == 0x5b && code_3 == UPP_ARROW) return UPP_ARROW;
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == DOWN_ARROW) return DOWN_ARROW;
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == RIGHT_ARROW) return RIGHT_ARROW;
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == LEFT_ARROW) return LEFT_ARROW;
-        else if (code_1 == 0xd && code_2 == 0x0 && code_3 == ENTER) return ENTER;
+        else if (code_1 == ENTER) return ENTER;
     }
 
     return -1;
