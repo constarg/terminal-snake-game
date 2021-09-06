@@ -1,6 +1,7 @@
 #ifndef TERMINAL_SNAKE_GAME_FOOD_H
 #define TERMINAL_SNAKE_GAME_FOOD_H 1
 
+#define FOOD_SYMBOL "O"
 
 typedef struct s_food {
     short int f_x;
