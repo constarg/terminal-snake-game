@@ -4,7 +4,7 @@
 #include <snake/snake.h>
 #include <food/food.h>
 
-extern void refresh_game(g_snake_piece **snake_pieces, size_t *snake_size, s_food *food);
+extern void refresh_game(g_snake_piece **snake_pieces, size_t snake_size, s_food *food);
 
 
 #endif
