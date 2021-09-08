@@ -35,6 +35,12 @@ int main() {
             break;
         }
     }
+    
+    draw_game_over_screen();
+    while (key_stroke_code != ENTER) {
+        key_stroke_code = get_pressed_key();
+        usleep(5000);
+    }
 
     destruct();
     stop_non_blocking_mode();

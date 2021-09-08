@@ -24,40 +24,61 @@ static inline int is_food_eaten() {
         return 0;
 }
 
-static void move_pieces() {
-    // Save the position that the next piece should be.
-    int x_for_next;
-    int y_for_next;
-    int x_tmp;
-    int y_tmp;
+static int move_pieces() {
 
-    for (size_t curr_piece = 0; curr_piece < snake_size; curr_piece++) {
-        if (curr_piece + 1 == snake_size) {
-            GO_TO(snake_pieces[curr_piece]->s_x, snake_pieces[curr_piece]->s_y);
-            printf(" ");
+    g_snake_piece prev_piece_point;
+    g_snake_piece tmp_piece_point;
+
+    g_snake_piece *snake_head_point = snake_pieces[0];
+
+    // Save the current head location.
+    prev_piece_point.s_x = snake_head_point->s_x;
+    prev_piece_point.s_y = snake_head_point->s_y;
+    // Clear the previous symbol in screen.
+    GO_TO(prev_piece_point.s_x, prev_piece_point.s_y);
+    printf(" ");
+    // move the head.
+    snake_head_point->s_x += dx;
+    snake_head_point->s_y += dy;
+    snake_head_point->s_symbol = head;
+
+    double distance;
+
+    for (int curr_piece = 1; curr_piece < snake_size; curr_piece++) {
+        // Clear the screen.
+        GO_TO(snake_pieces[curr_piece]->s_x, snake_pieces[curr_piece]->s_y);
+        printf(" ");
+
+        // Save the current location for the next piece.
+        tmp_piece_point.s_x = snake_pieces[curr_piece]->s_x;
+        tmp_piece_point.s_y = snake_pieces[curr_piece]->s_y;
+
+        // Check if the head hit a piece of tail.
+        if (tmp_piece_point.s_x != 0 && tmp_piece_point.s_y != 0) {
+            distance = calculate_distance(
+                    snake_head_point->s_x,
+                    snake_head_point->s_y,
+                    tmp_piece_point.s_x,
+                    tmp_piece_point.s_y
+                    );
+
+            if (distance < 1) {
+                return 0;
+            }
         }
 
-        if (curr_piece > 0) {
-            x_tmp = snake_pieces[curr_piece]->s_x;
-            y_tmp = snake_pieces[curr_piece]->s_y;
-            snake_pieces[curr_piece]->s_x = x_for_next;
-            snake_pieces[curr_piece]->s_y = y_for_next;
-            x_for_next = x_tmp;
-            y_for_next = y_tmp;
-            continue;
-        }
+        // Change the location.
+        snake_pieces[curr_piece]->s_x = prev_piece_point.s_x;
+        snake_pieces[curr_piece]->s_y = prev_piece_point.s_y;
 
-        // If the current piece is head.
-        if (curr_piece == 0) {
-            x_for_next = snake_pieces[curr_piece]->s_x;
-            y_for_next = snake_pieces[curr_piece]->s_y;
-            snake_pieces[curr_piece]->s_x += dx;
-            snake_pieces[curr_piece]->s_y += dy;
-            snake_pieces[curr_piece]->s_symbol = head;
-            continue;
-        }
+        // Switch the values of tmp and prev_piece_point.
+
+        prev_piece_point.s_x = tmp_piece_point.s_x;
+        prev_piece_point.s_y = tmp_piece_point.s_y;
 
     }
+
+    return 1;
 }
 
 void increase_snake_size() {
@@ -82,10 +103,8 @@ static int is_snake_hit_wall() {
     int snake_current_x = snake_pieces[0]->s_x;
     int snake_current_y = snake_pieces[0]->s_y;
 
-    printf("%d", snake_current_x);
-
-    if (snake_current_x > terminal_dimension.ws_col || snake_current_x == -1 ||
-        snake_current_y > terminal_dimension.ws_row || snake_current_y == -1) {
+    if (snake_current_x == -1 || snake_current_x > terminal_dimension.ws_col ||
+        snake_current_y == -1 || snake_current_y > terminal_dimension.ws_row) {
 
         return 1;
     }
@@ -94,64 +113,19 @@ static int is_snake_hit_wall() {
         return 0;
 }
 
-static int is_snake_hit_himself() {
-    g_snake_piece snake_head = {
-            .s_x = snake_pieces[0]->s_x,
-            .s_y = snake_pieces[0]->s_x,
-            .s_symbol = snake_pieces[0]->s_symbol
-    };
-
-    if (snake_size <= 2) return 0;
-
-    double distance_piece;
-
-    for (int piece = 2; piece < snake_size; piece++) {
-        distance_piece = calculate_distance(
-                    snake_head.s_x,
-                    snake_head.s_y,
-                    snake_pieces[piece]->s_x,
-                    snake_pieces[piece]->s_y
-                );
-
-        if (distance_piece == 0)
-            return 1;
-    }
-
-    return 0;
-}
-
-
-static int is_snake_killed() {
-
-    if (is_snake_hit_wall()) {
-        printf("HIT HIMSELF");
-        return 1;
-    }
-    if (is_snake_hit_himself()) {
-        printf("HIT WALL");
-        return 1;
-    }
-
-
-    return 0;
-
-}
-
 int move_snake(int direction) {
-    if      (direction == UPP_ARROW)    dy = -1, dx =  0, head = SNAKE_HEAD_UP;
-    else if (direction == DOWN_ARROW)   dy =  1, dx =  0, head = SNAKE_HEAD_DOWN;
-    else if (direction == RIGHT_ARROW)  dy =  0, dx =  1, head = SNAKE_HEAD_RIGHT;
-    else if (direction == LEFT_ARROW)   dy =  0, dx = -1, head = SNAKE_HEAD_LEFT;
+    if      (direction == UPP_ARROW) dy = -1, dx =  0, head = SNAKE_HEAD_UP;
+    else if (direction == DOWN_ARROW) dy =  1, dx =  0, head = SNAKE_HEAD_DOWN;
+    else if (direction == RIGHT_ARROW) dy =  0, dx =  1, head = SNAKE_HEAD_RIGHT;
+    else if (direction == LEFT_ARROW)  dy =  0, dx = -1, head = SNAKE_HEAD_LEFT;
 
-    move_pieces();
-
-    if (is_snake_killed()) return 0;
+    if (!move_pieces())       return 0;
+    if (is_snake_hit_wall()) return 0;
     //
     if (is_food_eaten()) {
         change_position_of(snake_food);
         snake_size = snake_size + 1;
         increase_snake_size();
-        move_pieces();
     }
 
 
