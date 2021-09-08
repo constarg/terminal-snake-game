@@ -3,7 +3,7 @@ Just a classic game, but written for Linux terminal.
 
 # Download & Build
 
-First download the program from GitHub and go to the File-Sorter-Core folder.
+First download the program from GitHub and go to the terminal-snake-game folder.
 
 ```
 % git clone https://github.com/rounnus/terminal-snake-game.git
