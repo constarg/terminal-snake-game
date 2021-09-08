@@ -18,7 +18,7 @@ followed.<br>
 % cd build/
 % cmake ../
 % make
-% sudo make install
+% ./terminal_snake_game
 ```
 
 `
