@@ -6,8 +6,8 @@ Just a classic game, but written for Linux terminal.
 First download the program from GitHub and go to the File-Sorter-Core folder.
 
 ```
-% git clone https://github.com/rounnus/File-Sorter-Core.git
-% cd File-Sorter-Core/
+% git clone https://github.com/rounnus/terminal-snake-game.git
+% cd terminal-snake-game/
 ```
 
 After installation the program must be built. In order to build the program, the following instructions must be
