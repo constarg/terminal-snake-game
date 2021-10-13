@@ -114,8 +114,8 @@ static int is_snake_hit_wall() {
 }
 
 int move_snake(int direction) {
-    if      (direction == UPP_ARROW) dy = -1, dx =  0, head = SNAKE_HEAD_UP;
-    else if (direction == DOWN_ARROW) dy =  1, dx =  0, head = SNAKE_HEAD_DOWN;
+    if      (direction == UPP_ARROW)   dy = -1, dx =  0, head = SNAKE_HEAD_UP;
+    else if (direction == DOWN_ARROW)  dy =  1, dx =  0, head = SNAKE_HEAD_DOWN;
     else if (direction == RIGHT_ARROW) dy =  0, dx =  1, head = SNAKE_HEAD_RIGHT;
     else if (direction == LEFT_ARROW)  dy =  0, dx = -1, head = SNAKE_HEAD_LEFT;
 
