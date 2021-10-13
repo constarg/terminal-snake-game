@@ -119,7 +119,7 @@ int move_snake(int direction) {
     else if (direction == RIGHT_ARROW) dy =  0, dx =  1, head = SNAKE_HEAD_RIGHT;
     else if (direction == LEFT_ARROW)  dy =  0, dx = -1, head = SNAKE_HEAD_LEFT;
 
-    if (!move_pieces())       return 0;
+    if (!move_pieces())      return 0;
     if (is_snake_hit_wall()) return 0;
     //
     if (is_food_eaten()) {
