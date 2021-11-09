@@ -34,3 +34,7 @@ After this the program will be installed and ready to run.
 ![image](https://user-images.githubusercontent.com/38585824/132504511-564cb47b-b76e-47e0-be94-69fb7e96b955.png)<br>
 ![image](https://user-images.githubusercontent.com/38585824/132504563-97e7a716-20d1-4f51-bc74-2b875563ed5b.png)<br>
 
+# Compatible operating systems
+- [X] Linux
+- [ ] Windows
+- [ ] Mac
