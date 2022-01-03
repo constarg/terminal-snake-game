@@ -2,6 +2,12 @@
 # terminal-snake-game
 Just a classic game, but written for Linux terminal.
 
+# Installation requirements
+The following packages must be installed.<br>
+```
+sudo apt-get install build-essential cmake git gcc
+```
+
 # Download & Build
 
 First download the program from GitHub and go to the terminal-snake-game folder.
