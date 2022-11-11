@@ -13,7 +13,7 @@ sudo apt-get install build-essential cmake git gcc
 First download the program from GitHub and go to the terminal-snake-game folder.
 
 ```
-% git clone https://github.com/rounnus/terminal-snake-game.git
+% git clone https://github.com/EmbeddedCat/terminal-snake-game.git
 % cd terminal-snake-game/
 ```
 
