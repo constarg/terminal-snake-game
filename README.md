@@ -1,4 +1,4 @@
-[![terminal-snake-game Build](https://github.com/rounnus/terminal-snake-game/actions/workflows/terminal-snake-game%20Build.yml/badge.svg?branch=main)](https://github.com/rounnus/terminal-snake-game/actions/workflows/terminal-snake-game%20Build.yml)
+[![terminal-snake-game Build](https://github.com/EmbeddedCat/terminal-snake-game/actions/workflows/terminal-snake-game%20Build.yml/badge.svg?branch=main)](https://github.com/EmbeddedCat/terminal-snake-game/actions/workflows/terminal-snake-game%20Build.yml)
 # terminal-snake-game
 Just a classic game, but written for Linux terminal.
 
