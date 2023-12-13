@@ -12,7 +12,6 @@
 
 
 static struct termios *old_terminal;
-static int non_blocking_enabled = FALSE;
 
 struct winsize get_terminal_dimensions() {
     struct winsize terminal_size;
@@ -37,7 +36,6 @@ int start_non_blocking_mode() {
     // Set the new terminal.
     if (tcsetattr(STDIN_FILENO, TCSANOW, &new_terminal) == -1) return -1;
 
-    non_blocking_enabled = TRUE;
     return 0;
 }
 
@@ -47,7 +45,6 @@ int stop_non_blocking_mode() {
     tcsetattr(STDIN_FILENO, TCSANOW, old_terminal);
 
     free(old_terminal);
-    non_blocking_enabled = FALSE;
     return 0;
 }
 
@@ -55,8 +52,6 @@ int stop_non_blocking_mode() {
 int get_pressed_key() {
     char buffer[3];
     ssize_t len;
-
-    if (!non_blocking_enabled) return -1;
 
     len = read(STDIN_FILENO, &buffer, sizeof(buffer));
 
@@ -68,7 +63,7 @@ int get_pressed_key() {
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == DOWN_ARROW) return DOWN_ARROW;
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == RIGHT_ARROW) return RIGHT_ARROW;
         else if (code_1 == 0x1b && code_2 == 0x5b && code_3 == LEFT_ARROW) return LEFT_ARROW;
-        else if (code_1 == ENTER) return ENTER;
+        else return ENTER;
     }
 
     return -1;
